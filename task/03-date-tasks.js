@@ -22,7 +22,8 @@
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
 function parseDataFromRfc2822(value) {
-   throw new Error('Not implemented');
+   return new Date(Date.parse(value));
+   //throw new Error('Not implemented');
 }
 
 /**
@@ -37,7 +38,8 @@ function parseDataFromRfc2822(value) {
  *    '2016-01-19T08:07:37Z' => Date()
  */
 function parseDataFromIso8601(value) {
-   throw new Error('Not implemented');
+   return Date.parse(value);
+   //throw new Error('Not implemented');
 }
 
 
@@ -56,7 +58,9 @@ function parseDataFromIso8601(value) {
  *    Date(2015,1,1)    => false
  */
 function isLeapYear(date) {
-   throw new Error('Not implemented');
+   let year = date.getFullYear();
+   return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+   //throw new Error('Not implemented');
 }
 
 
@@ -76,7 +80,21 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(startDate, endDate) {
-   throw new Error('Not implemented');
+   let diff = endDate - startDate;
+   let hours = parseInt((diff/(1000*60*60))%24);
+   let minutes = parseInt((diff/(1000*60))%60)
+   let seconds = parseInt((diff/1000)%60)
+   let milliseconds = parseInt(diff%1000)
+
+   hours = (hours < 10) ? "0" + hours : hours;
+   minutes = (minutes < 10) ? "0" + minutes : minutes;
+   seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+   if (('' + milliseconds) < 3) {
+     milliseconds += '00'
+   }
+
+   return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
 }
 
 
@@ -94,7 +112,52 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(date) {
-    throw new Error('Not implemented');
+
+    let normDate = new Date(date);
+    let hours = normDate.getUTCHours();
+   
+    if (hours == 13) {
+      hours = 1;
+    } else if (hours == 14) {
+      hours = 2;
+    } else if (hours == 15) {
+      hours = 3;
+    } else if (hours == 16) {
+      hours = 4;
+    } else if (hours == 17) {
+      hours = 5;
+    } else if (hours == 18) {
+      hours = 6;
+    } else if (hours == 19) {
+      hours = 7;
+    } else if (hours == 20) {
+      hours = 8;
+    } else if (hours == 21) {
+      hours = 9;
+    } else if (hours == 22) {
+      hours = 10;
+    } else if (hours == 23) {
+      hours = 11;
+    } else if (hours == 24) {
+      hours = 0;
+    }
+  
+    let minutes = normDate.getUTCMinutes();
+    let hoursAngle = 0.5 * (60 * hours + minutes);
+    let minutesAngle = minutes * 6;
+    let anglesDiff;
+    
+    if (hoursAngle >  minutesAngle) {
+      anglesDiff = hoursAngle - minutesAngle;
+    } else {
+      anglesDiff = minutesAngle - hoursAngle;
+    } 
+    if (anglesDiff > 180) {
+      anglesDiff = 360 - anglesDiff;
+    }
+
+    return (anglesDiff * Math.PI) / 180;
+    //throw new Error('Not implemented');
 }
 
 

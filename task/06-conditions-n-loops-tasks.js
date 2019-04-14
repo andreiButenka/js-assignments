@@ -30,7 +30,16 @@
  *
  */
 function getFizzBuzz(num) {
-    throw new Error('Not implemented');
+    if (num % 3 == 0 && num % 5 == 0) {
+      return 'FizzBuzz';
+    } else if (num % 3 == 0 && num % 5 != 0) {
+      return 'Fizz';
+    } else if (num % 3 != 0 && num % 5 == 0) {
+      return 'Buzz';
+    } else {
+      return num;
+    }
+    //throw new Error('Not implemented');
 }
 
 
@@ -46,7 +55,8 @@ function getFizzBuzz(num) {
  *   10 => 3628800
  */
 function getFactorial(n) {
-    throw new Error('Not implemented');
+    return (n != 1) ? n * getFactorial(n - 1) : 1;
+    //throw new Error('Not implemented');
 }
 
 
@@ -63,7 +73,9 @@ function getFactorial(n) {
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
 function getSumBetweenNumbers(n1, n2) {
-    throw new Error('Not implemented');
+    let arr = Array(n2 - n1 + 1).fill().map((a, idx) => n1 + idx);
+    return arr.reduce((sum, cur) => sum + cur);
+    //throw new Error('Not implemented');
 }
 
 
@@ -82,7 +94,11 @@ function getSumBetweenNumbers(n1, n2) {
  *   10,10,10 =>  true
  */
 function isTriangle(a,b,c) {
-    throw new Error('Not implemented');
+    if (a + b > c && a + c > b && b + c > a ) {
+      return true;
+    }
+    return false;
+    //throw new Error('Not implemented');
 }
 
 
@@ -166,7 +182,19 @@ function isInsideCircle(circle, point) {
  *   'entente' => null
  */
 function findFirstSingleChar(str) {
-    throw new Error('Not implemented');
+    let len = str.length, char, charCount = {};
+      for(let i =0; i < len; i++){
+        char = str[i];
+        if(charCount[char]) {
+          charCount[char]++;
+        } else
+          charCount[char] = 1;
+        }
+      for (let j in charCount){
+        if (charCount[j] == 1)
+          return j;
+      }
+    //throw new Error('Not implemented');
 }
 
 
@@ -209,7 +237,8 @@ function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
  * 'noon' => 'noon'
  */
 function reverseString(str) {
-    throw new Error('Not implemented');
+    return str.split('').reverse().join('');
+    //throw new Error('Not implemented');
 }
 
 
@@ -226,7 +255,10 @@ function reverseString(str) {
  *   34143 => 34143
  */
 function reverseInteger(num) {
-    throw new Error('Not implemented');
+    let str = '' + num;
+    let strReversed = str.split('').reverse().join('');
+    return +strReversed;
+    //throw new Error('Not implemented');
 }
 
 
@@ -296,7 +328,26 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true 
  */
 function isBracketsBalanced(str) {
-    throw new Error('Not implemented');
+    let stack = [];
+    let openingBrackets = ['[', '(', '{', '<'];
+    let closingBrackets = [']', ')', '}', '>'];
+    for (let i = 0; i < str.length; i++) { 
+      if (openingBrackets.includes(str[i])) { 
+        stack.push(str[i]) 
+        
+      } else if (closingBrackets.includes(str[i])) { 
+          let openPair = openingBrackets[closingBrackets.indexOf(str[i])]; 
+          if (stack[stack.length - 1] === openPair) { 
+            stack.pop(); 
+          } else { 
+            stack.push(str[i]); 
+            break 
+          }
+        }
+    }
+
+    return stack.length == 0;
+    //throw new Error('Not implemented');
 }
 
 
