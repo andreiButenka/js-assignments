@@ -49,7 +49,10 @@ function getComposition(f,g) {
  *
  */
 function getPowerFunction(exponent) {
-    throw new Error('Not implemented');
+    return function(x) {
+      return Math.pow(x, exponent);
+    }
+    //throw new Error('Not implemented');
 }
 
 
@@ -67,7 +70,13 @@ function getPowerFunction(exponent) {
  *   getPolynom()      => null
  */
 function getPolynom() {
-    throw new Error('Not implemented');
+    var args = [].slice.call(arguments).reverse();
+      return function(x) {
+        return args.reduce((prev, cur, i) => {
+                return prev + cur * Math.pow(x, i);
+        }, 0);
+      };
+    //throw new Error('Not implemented');
 }
 
 
@@ -86,7 +95,13 @@ function getPolynom() {
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
 function memoize(func) {
-    throw new Error('Not implemented');
+    return function() {
+      if (memoize.cache == undefined) {
+             memoize.cache = func();
+      }
+      return memoize.cache;
+    };
+    //throw new Error('Not implemented');
 }
 
 
@@ -106,7 +121,16 @@ function memoize(func) {
  * retryer() => 2
  */
 function retry(func, attempts) {
-    throw new Error('Not implemented');
+   return function() {
+     while (attempts > 0) {
+       try {
+         return func();
+       } catch (e) {
+         attempts++;
+       }
+     }
+    };
+    //throw new Error('Not implemented');
 }
 
 
@@ -152,7 +176,31 @@ function logger(func, logFunc) {
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
 function partialUsingArguments(fn) {
-    throw new Error('Not implemented');
+    let args = [].slice.call(arguments);
+    
+    let a = args[1];
+    let b = args[2];
+    let c = args[3];
+    let d = args[4];
+
+    let trueFn;
+
+    if (args.length == 2) {
+      trueFn = fn.bind(null, a);
+    } else if (args.length == 3) {
+      trueFn = fn.bind(null, a, b);
+    } else if (args.length == 4) {
+      trueFn = fn.bind(null, a, b, c);
+    } else if (args.length == 5) {
+      trueFn = fn.bind(null, a, b, c, d);
+    }
+
+    function wrapper() {
+      return trueFn;
+    }
+
+    return wrapper();
+    //throw new Error('Not implemented');
 }
 
 
@@ -173,7 +221,16 @@ function partialUsingArguments(fn) {
  *   getId10() => 11
  */
 function getIdGeneratorFunction(startFrom) {
-    throw new Error('Not implemented');
+    return function() {
+      if (getIdGeneratorFunction[startFrom] == undefined) {
+        getIdGeneratorFunction[startFrom] = startFrom;
+        return getIdGeneratorFunction[startFrom];
+      } else {
+      getIdGeneratorFunction[startFrom]++;
+        return getIdGeneratorFunction[startFrom];
+      }
+    }
+    //throw new Error('Not implemented');
 }
 
 

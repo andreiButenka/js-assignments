@@ -135,7 +135,19 @@ function isTriangle(a,b,c) {
  *  
  */
 function doRectanglesOverlap(rect1, rect2) {
-    throw new Error('Not implemented');
+    if (rect1.top > rect2.top || rect1.left > rect2.left) {
+        let temp = rect1;
+        rect1 = rect2;
+        rect2 = temp;
+    }
+    
+    if ((rect1.left <= rect2.left && rect1.left + rect1.height >= rect2.left) && 
+    (rect1.top <= rect2.top && rect1.top + rect1.width >= rect2.top)) {
+      return true;
+    }   
+    
+    return false;
+    //throw new Error('Not implemented');
 }
 
 
@@ -166,7 +178,10 @@ function doRectanglesOverlap(rect1, rect2) {
  *   
  */
 function isInsideCircle(circle, point) {
-    throw new Error('Not implemented');
+    let dist = Math.sqrt(Math.pow(circle.center.x - point.x, 2) + Math.pow(circle.center.y - point.y, 2))
+    
+    return dist < circle.radius;
+    //throw new Error('Not implemented');
 }
 
 
@@ -220,7 +235,32 @@ function findFirstSingleChar(str) {
  *
  */
 function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
-    throw new Error('Not implemented');
+    let openQuoteIncluded = '[';
+    let closeQuoteIncluded = ']';
+    let openQuoteNotIncluded = '(';
+    let closeQuoteNotIncluded = ')';
+    if (a < b) {
+      if (isStartIncluded && isEndIncluded) {
+        return openQuoteIncluded + a + ', ' + b + closeQuoteIncluded;
+      } else if (!isStartIncluded && isEndIncluded) {
+        return openQuoteNotIncluded + a + ', ' + b + closeQuoteIncluded;
+      } else if (isStartIncluded && !isEndIncluded) {
+        return openQuoteIncluded + a + ', ' + b + closeQuoteNotIncluded;
+      } else {
+        return openQuoteNotIncluded + a + ', ' + b + closeQuoteNotIncluded;
+      }
+    } else {
+      if (isStartIncluded && isEndIncluded) {
+        return openQuoteIncluded + b + ', ' + a + closeQuoteIncluded;
+      } else if (!isStartIncluded && isEndIncluded) {
+        return openQuoteNotIncluded + b + ', ' + a + closeQuoteIncluded;
+      } else if (isStartIncluded && !isEndIncluded) {
+        return openQuoteIncluded + b + ', ' + a + closeQuoteNotIncluded;
+      } else {
+        return openQuoteNotIncluded + b + ', ' + a + closeQuoteNotIncluded;
+      }
+    }
+    //throw new Error('Not implemented');
 }
 
 
@@ -283,7 +323,26 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
-    throw new Error('Not implemented');
+      let str = ccn.toString();
+      let sum = 0;
+      let doubleUp = false;
+
+      for (let i = str.length - 1; i >= 0; i--) {
+        let curDigit = parseInt(str.charAt(i));
+        if (doubleUp) {
+          if ((curDigit * 2) > 9) {
+            sum +=( curDigit*2)-9;
+          } else {
+            sum += curDigit*2;
+          }
+        } else {
+            sum += curDigit;
+        }
+          doubleUp =!doubleUp
+      }
+
+      return (sum % 10) == 0  ? true : false;
+    //throw new Error('Not implemented');
 }
 
 
@@ -302,7 +361,18 @@ function isCreditCardNumber(ccn) {
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
 function getDigitalRoot(num) {
-    throw new Error('Not implemented');
+    let str = '' + num;
+    let arr = str.split('');
+    let sum = arr.reduce((sum, cur) => +sum + (+cur));
+    let sumArr = ('' + sum).split('');
+    let result = sumArr.reduce((sum, cur) => +sum + (+cur));
+
+    if (result <= 9) {
+      return result;
+    } else {
+      getDigitalRoot(result);
+    }
+    //throw new Error('Not implemented');
 }
 
 
@@ -383,7 +453,35 @@ function isBracketsBalanced(str) {
  *
  */
 function timespanToHumanString(startDate, endDate) {
-    throw new Error('Not implemented');
+    let diff = endDate - startDate;
+    let minutes = 60000;
+    let hours = minutes * 60;
+    let days = hours * 24;
+    
+    if (diff <= 45000) {
+      return 'a few seconds ago';
+    } else if (diff <= 90000) {
+      return 'a minute ago';
+    } else if (diff <= 45 * minutes) {
+      return Math.round((diff - 1)/minutes) + ' minutes ago';
+    } else if (diff <= minutes * 90) {
+      return 'an hour ago';
+    } else if (diff <= hours * 22) {
+      return Math.round((diff - 1)/ hours) + ' hours ago';
+    } else if (diff <= hours * 36) {
+      return 'a day ago';
+    } else if (diff <= days * 25) {
+      return Math.round((diff - 1)/ days) + ' days ago';
+    } else if (diff <= days * 45) {
+      return 'a month ago';
+    } else if (diff <= days * 345) {
+      return Math.round((diff - 1)/ (days*30)) + ' months ago';
+    } else if (diff <= days * 545) {
+      return 'a year ago';
+    } else {
+      return Math.round((diff - 1)/ (days*365)) + ' years ago';
+    }
+    //throw new Error('Not implemented');
 }
 
 
@@ -407,7 +505,8 @@ function timespanToHumanString(startDate, endDate) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-    throw new Error('Not implemented');
+    return num.toString(n);
+    //throw new Error('Not implemented');
 }
 
 
