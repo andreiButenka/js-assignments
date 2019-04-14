@@ -156,6 +156,15 @@ function getZigZagMatrix(n) {
  *
  */
 function canDominoesMakeRow(dominoes) {
+    // let result = true;
+    // for (let i = 0; i < dominoes.length - 1; i++) {
+    //    let reversed = dominoes[i].reverse();
+    //    console.log(reversed);
+    //   if (dominoes[i][1] == dominoes[i + 1][0] && reversed[1] == dominoes[i + 1][0]) {
+    //     result = false;
+    //   } 
+    // }
+    // return result;
     throw new Error('Not implemented');
 }
 

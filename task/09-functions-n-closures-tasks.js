@@ -157,6 +157,7 @@ function retry(func, attempts) {
  * cos(3.141592653589793) ends
  *
  */
+ //'cos(3.141592653589793) starts\n'
 function logger(func, logFunc) {
     throw new Error('Not implemented');
 }
