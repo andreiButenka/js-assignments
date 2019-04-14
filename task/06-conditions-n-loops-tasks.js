@@ -323,25 +323,25 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
-      let str = ccn.toString();
-      let sum = 0;
-      let doubleUp = false;
+    let str = ccn.toString();
+    let sum = 0;
+    let doubleUp = false;
 
-      for (let i = str.length - 1; i >= 0; i--) {
-        let curDigit = parseInt(str.charAt(i));
-        if (doubleUp) {
-          if ((curDigit * 2) > 9) {
-            sum +=( curDigit*2)-9;
-          } else {
-            sum += curDigit*2;
-          }
+    for (let i = str.length - 1; i >= 0; i--) {
+      let curDigit = parseInt(str.charAt(i));
+      if (doubleUp) {
+        if ((curDigit * 2) > 9) {
+          sum +=( curDigit*2)-9;
         } else {
-            sum += curDigit;
+          sum += curDigit*2;
         }
-          doubleUp =!doubleUp
+      } else {
+          sum += curDigit;
       }
+        doubleUp =!doubleUp
+    }
 
-      return (sum % 10) == 0  ? true : false;
+    return (sum % 10) == 0  ? true : false;
     //throw new Error('Not implemented');
 }
 
@@ -581,7 +581,32 @@ function getMatrixProduct(m1, m2) {
  *
  */
 function evaluateTicTacToePosition(position) {
-    throw new Error('Not implemented');
+    if ((position[0][0] == 'X' && position[0][1] == 'X' && position[0][2] == 'X') ||
+        (position[1][0] == 'X' && position[1][1] == 'X' && position[1][2] == 'X') ||
+        (position[2][0] == 'X' && position[2][1] == 'X' && position[2][2] == 'X') ||
+        
+        (position[0][0] == 'X' && position[1][0] == 'X' && position[2][0] == 'X') ||
+        (position[0][1] == 'X' && position[1][1] == 'X' && position[2][1] == 'X') ||
+        (position[0][2] == 'X' && position[1][2] == 'X' && position[2][2] == 'X') ||
+
+        (position[0][0] == 'X' && position[1][1] == 'X' && position[2][2] == 'X') ||
+        (position[0][2] == 'X' && position[1][1] == 'X' && position[2][0] == 'X')) {
+      return 'X';
+    } else if ((position[0][0] == '0' && position[0][1] == '0' && position[0][2] == '0') ||
+        (position[1][0] == '0' && position[1][1] == '0' && position[1][2] == '0') ||
+        (position[2][0] == '0' && position[2][1] == '0' && position[2][2] == '0') ||
+        
+        (position[0][0] == '0' && position[1][0] == '0' && position[2][0] == '0') ||
+        (position[0][1] == '0' && position[1][1] == '0' && position[2][1] == '0') ||
+        (position[0][2] == '0' && position[1][2] == '0' && position[2][2] == '0') ||
+
+        (position[0][0] == '0' && position[1][1] == '0' && position[2][2] == '0') ||
+        (position[0][2] == '0' && position[1][1] == '0' && position[2][0] == '0')) {
+      return '0';
+    } else {
+      return undefined;
+    }
+    //throw new Error('Not implemented');
 }
 
 

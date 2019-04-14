@@ -571,7 +571,13 @@ function distinct(arr) {
  *   }
  */
 function group(array, keySelector, valueSelector) {
-   throw new Error('Not implemented');
+   let multimap = new Map();
+     array.map((val, i) => {
+       multimap.set(keySelector(val), (multimap.get(keySelector(val)) === undefined ? [] :
+       multimap.get(keySelector(val))).concat([valueSelector(val)]));
+     });
+    return multimap;
+   //throw new Error('Not implemented');
 }
 
 
@@ -587,7 +593,13 @@ function group(array, keySelector, valueSelector) {
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 function selectMany(arr, childrenSelector) {
-    throw new Error('Not implemented');
+    return arr.reduce((prev, cur) => {
+      let temp = childrenSelector(cur);
+
+      return prev.concat(temp);
+
+    }, []);
+    //throw new Error('Not implemented');
 }
 
 
